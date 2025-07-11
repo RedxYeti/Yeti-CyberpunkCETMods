@@ -1,1 +1,2 @@
-
+To add weapons, place their names in the weapon_types file.
+To add attachments, put their names in the weapon_parts file.
