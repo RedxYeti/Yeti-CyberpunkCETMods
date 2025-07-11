@@ -136,20 +136,15 @@ local function randomize_weapon()
     local empty_slots = item_data:GetEmptySlotsOnItem()
 
     if next(empty_slots) then
-        print("new item>>>>>>>>>>>>>>")
         for index, empty_slot in ipairs(empty_slots) do
-            print(tostring(empty_slot))
             if tostring(empty_slot):find("Scope") then
                 local possible_scopes = util.get_available_scopes(item_data)
                 if possible_scopes then 
                     local random_scope = string.format("Items.%s", possible_scopes[ math.random( #possible_scopes ) ] )
                     local item_id = ItemID.FromTDBID(TweakDBID.new(random_scope))
                     if util.roll_for_attachment(player_level) and transaction_system:GiveItem(player, item_id, 1) then
-                        print(string.format("adding %s ", random_scope))
                         transaction_system:AddPart(player, new_weapon, item_id, empty_slot)
                     end
-                else
-                    print(string.format("failed scope on weapon type %s", util.get_weapon_type(item_data)))
                 end
             
             elseif tostring(empty_slot):find("PowerModule") then
@@ -158,11 +153,8 @@ local function randomize_weapon()
                     local random_muzzle = string.format("Items.%s", possible_muzzles[ math.random( #possible_muzzles ) ] )
                     local item_id = ItemID.FromTDBID(TweakDBID.new(random_muzzle))
                     if util.roll_for_attachment(player_level) and transaction_system:GiveItem(player, item_id, 1) then
-                        print(string.format("adding %s ", random_muzzle))
                         transaction_system:AddPart(player, new_weapon, item_id, empty_slot)
                     end
-                else
-                    print(string.format("failed muzzle on weapon type %s", util.get_weapon_type(item_data)))
                 end
             else
                 local possible_mods = util.get_available_mods(item_data)
@@ -170,11 +162,8 @@ local function randomize_weapon()
                     local random_mod = string.format("Items.%s", possible_mods[ math.random( #possible_mods ) ] )
                     local item_id = ItemID.FromTDBID(TweakDBID.new(random_mod))
                     if util.roll_for_attachment(player_level) and transaction_system:GiveItem(player, item_id, 1) then
-                        print(string.format("adding %s ", random_mod))
                         transaction_system:AddPart(player, new_weapon, item_id, empty_slot)
                     end
-                else
-                    print(string.format("failed mod on weapon type %s", util.get_weapon_type(item_data)))
                 end
             end   
         end
